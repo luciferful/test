@@ -21,7 +21,7 @@
 #include "cJSON_Utils.h"
 
 
-long int file_len_get(FILE *fp)
+static long int file_len_get(FILE *fp)
 {
     long int flen;
     fseek(fp,0L,SEEK_SET);  /* 定位到文件开头 */
