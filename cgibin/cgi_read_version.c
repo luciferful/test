@@ -19,17 +19,8 @@
 #include <fcntl.h>
 #include "cJSON.h"
 #include "cJSON_Utils.h"
+#include "cgi_common.h"
 
-
-static long int file_len_get(FILE *fp)
-{
-    long int flen;
-    fseek(fp,0L,SEEK_SET);  /* 定位到文件开头 */
-    fseek(fp,0L,SEEK_END);  /* 定位到文件末尾 */
-    flen=ftell(fp);         /* 得到文件大小 */
-    fseek(fp,0L,SEEK_SET);  /* 定位到文件开头 */
-    return flen;
-}
 
 int Get_firmware_Name(int *name)
 {

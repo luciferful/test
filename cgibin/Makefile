@@ -21,7 +21,7 @@ LINK = $(CCLD) $(CFLAGS) $(LDFLAGS) $(AM_LDFLAGS)
 WEB_PATH = ~/goahead-4.1.3/build/linux-x86-default/bin
 
 #define the TestEx of exectue
-COMM_OBJ = cJSON.o cJSON_utils.o
+COMM_OBJ = cJSON.o cJSON_utils.o cgi_common.o
 
 #define the input file
 #cgibin_SOURCES = main.c 
@@ -29,8 +29,8 @@ SRCS := $(wildcard *.c)
 OBJS := $(SRCS:.c=.o)
 
 define module
-	$(LINK) $(1).o $(COMM_OBJ) $(LIBS) -o $(1)
-	install -m0777 $(1) $(WEB_PATH)/cgi-bin/
+	$(LINK) $(1).o $(COMM_OBJ) $(LIBS) -o bin/$(1)
+	install -m0777 bin/$(1) $(WEB_PATH)/cgi-bin/
 endef
 
 
@@ -38,10 +38,13 @@ endef
 #am__mv = mv -f
 
 all: $(OBJS)
-	$(call module, cgi_read_version)
-	$(call module, cgi_login)
-	$(call module, cgi_read_nodeinfo)
-	$(call module, cgi_read_alldev)
+	mkdir -p bin
+	mkdir -p debug
+	$(call module,cgi_login)
+	$(call module,cgi_read_nodeinfo)
+	$(call module,cgi_read_alldev)
+	mv *.o debug/
+	mv *.d debug/
  
 %.o: %.c
     #$(CC) -c $< -o $@ $(CFLAGS)
@@ -50,7 +53,7 @@ all: $(OBJS)
 	#$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
  
 clean :
-	@rm -rf *.o
+	@rm -rf *.o *.d bin/ debug/
  
 #.SUFFIXES:
 .PHONY : all clean

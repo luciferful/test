@@ -18,8 +18,10 @@
 #include <fcntl.h>
 #include "cJSON.h"
 #include "cJSON_Utils.h"
+#include "cgi_common.h"
 
-/* {
+/* 
+{
 	"error":	0,
 	"status":	"success",
 	"date":	"2018-5-29 22:42:49",
@@ -39,47 +41,9 @@
 }
 */
 
-
-static char ret_info[128];
-static long int file_len_get(FILE *fp)
-{
-    long int flen;
-    fseek(fp,0L,SEEK_SET);  /* 定位到文件开头 */
-    fseek(fp,0L,SEEK_END);  /* 定位到文件末尾 */
-    flen=ftell(fp);         /* 得到文件大小 */
-    fseek(fp,0L,SEEK_SET);  /* 定位到文件开头 */
-    return flen;
-}
-
-
-
-char * read_device_file()
-{
-	FILE *fp;
-	char *buf;
-	fp = fopen("devinfo.dat", "rb");
-	if (fp == NULL)
-	{
-		printf("%s: no version is read!\n", __func__);
-		return 1;
-	}
-	
-	len = file_len_get(fp);
-	buf = malloc(len);
-	if (buf == NULL)
-	{
-		printf("malloc memory error!\n");
-		fclose(fp);
-		return 2;
-	}
-	
-	fread(buf, 1, len, fp);
-	fclose(fp);
-	return buf;
-}
-
 int read_device_json(cJSON ** root)
 {
+	int ret;
 	char *text = (char*)NULL;
 	cJSON *out = *root;
 	
@@ -87,22 +51,29 @@ int read_device_json(cJSON ** root)
 	cJSON *devlistArry = cJSON_CreateArray();
 	cJSON *dev;
 
-	cJSON_AddStringToObject(out, "status", "failed");
 	cJSON_AddItemToObject(out, "results", result);
 	cJSON_AddItemToObject(result, "devlist", devlistArry);
 	
-	text = read_device_file();
+	text = read_and_malloc_device_file("devinfo.dat", &ret);
 	if (text == NULL)
-		return -1;
+		return ret;
 	else {
 		int count, i;
 		cJSON *vis = NULL;
 		cJSON *json = cJSON_Parse(text);
 		if (json == NULL)
+		{
+			free(text);
 			return -2;
+		}
+
+		/* read json structure success, release the buf */
+		free(text);
 		vis = cJSON_GetObjectItem(json, "vis");
 		if (vis == NULL)
 			return -3;
+
+		/* vis number equal node number */
 		count = cJSON_GetArraySize(vis);
 		for(i = 0; i < count; i++)
 		{
@@ -131,9 +102,9 @@ int read_device_json(cJSON ** root)
 				
 			}
 		}
-		
+		cJSON_Delete(json);
 	}
-	
+	return 0;	
 }
 
 
@@ -141,16 +112,23 @@ int main()
 {
 	cJSON * root =  cJSON_CreateObject();
 	char *printtext;
+	int ret;
 
 	printf("Access-Control-Allow-Origin:*i\n");
 	printf("Content-Type:text/json;charset=utf-8\n\n");
 
-	read_device_json(&root);
+	ret = read_device_json(&root);
+	if (ret == 0)
+		cJSON_AddStringToObject(root, "status", "success");
+	else
+		cJSON_AddStringToObject(root, "status", "failed");
 	printf("%s\n\n", printtext = cJSON_Print(root));
 	free(printtext);
 
-
     cJSON_Delete(root);
-
 	return 0;
 }
+
+
+
+

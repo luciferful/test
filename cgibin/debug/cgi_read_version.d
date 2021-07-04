@@ -1,4 +1,4 @@
-cgi_read_alldev.o: cgi_read_alldev.c /usr/include/stdc-predef.h \
+cgi_read_version.o: cgi_read_version.c /usr/include/stdc-predef.h \
  /usr/include/dirent.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -109,7 +109,7 @@ cgi_read_alldev.o: cgi_read_alldev.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/fcntl.h \
  /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
  /usr/include/linux/falloc.h /usr/include/x86_64-linux-gnu/bits/stat.h \
- cJSON.h cJSON_Utils.h
+ cJSON.h cJSON_Utils.h cgi_common.h
 
 /usr/include/stdc-predef.h:
 
@@ -370,3 +370,5 @@ cgi_read_alldev.o: cgi_read_alldev.c /usr/include/stdc-predef.h \
 cJSON.h:
 
 cJSON_Utils.h:
+
+cgi_common.h:
