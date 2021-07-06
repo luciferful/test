@@ -43,6 +43,7 @@ all: $(OBJS)
 	$(call module,cgi_login)
 	$(call module,cgi_read_nodeinfo)
 	$(call module,cgi_read_alldev)
+	$(call module,cgi_read_topology)
 	mv *.o debug/
 	mv *.d debug/
  
