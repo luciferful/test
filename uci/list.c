@@ -274,6 +274,7 @@ uci_lookup_list(struct uci_list *list, const char *name)
 	struct uci_element *e;
 
 	uci_foreach_element(list, e) {
+		printf("%s: e->name = %s, name = %s\n", __func__, e->name, name);
 		if (!strcmp(e->name, name))
 			return e;
 	}

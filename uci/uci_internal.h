@@ -18,6 +18,8 @@
 #define __private __attribute__((visibility("hidden")))
 #define __public
 
+#define UCI_DEBUG
+
 struct uci_parse_context
 {
 	/* error context */

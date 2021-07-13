@@ -11,8 +11,8 @@ CFLAGS                = -fPIC -fstack-protector --param=ssp-buffer-size=4 -Wform
 
 IFLAGS                = "-I$(BUILD)/inc"
 LDFLAGS               = '-rdynamic' '-Wl,--enable-new-dtags' '-Wl,-rpath,$$ORIGIN/'
-LIBPATHS              = -L../uci/ -luci
-LIBS                  = -lrt -ldl -lpthread -lm
+LIBPATHS              = -L/home/kingw/code/test/uci -luci
+LIBS                  = -L/usr/lib/x86_64-linux-gnu -lrt -ldl -lpthread -lm
 
 CCLD = $(CC)
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(CFLAGS)

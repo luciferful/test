@@ -109,10 +109,9 @@ cgi_read_nodeinfo.o: cgi_read_nodeinfo.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/fcntl.h \
  /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
  /usr/include/linux/falloc.h /usr/include/x86_64-linux-gnu/bits/stat.h \
- cJSON.h cJSON_Utils.h cgi_common.h cgi_uci_common.h \
- /home/kingw/ers5800-hp-batman/staging_dir/target-mips_34kc_uClibc-0.9.33.2/usr/include/uci.h \
- /home/kingw/ers5800-hp-batman/staging_dir/target-mips_34kc_uClibc-0.9.33.2/usr/include/uci_config.h \
- /usr/include/setjmp.h /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+ cJSON.h cJSON_Utils.h cgi_common.h cgi_uci_common.h ../uci/uci.h \
+ ../uci/uci_config.h /usr/include/setjmp.h \
+ /usr/include/x86_64-linux-gnu/bits/setjmp.h \
  /usr/lib/gcc/x86_64-linux-gnu/7/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h
 
@@ -380,9 +379,9 @@ cgi_common.h:
 
 cgi_uci_common.h:
 
-/home/kingw/ers5800-hp-batman/staging_dir/target-mips_34kc_uClibc-0.9.33.2/usr/include/uci.h:
+../uci/uci.h:
 
-/home/kingw/ers5800-hp-batman/staging_dir/target-mips_34kc_uClibc-0.9.33.2/usr/include/uci_config.h:
+../uci/uci_config.h:
 
 /usr/include/setjmp.h:
 

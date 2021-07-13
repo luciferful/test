@@ -710,9 +710,12 @@ static char *uci_config_path(struct uci_context *ctx, const char *name)
 {
 	char *filename;
 
+	printf("%s: confdir = %s\n", __func__, ctx->confdir);
+
 	UCI_ASSERT(ctx, uci_validate_package(name));
 	filename = uci_malloc(ctx, strlen(name) + strlen(ctx->confdir) + 2);
 	sprintf(filename, "%s/%s", ctx->confdir, name);
+	printf("%s: filename = %s\n", __func__, filename);
 
 	return filename;
 }
@@ -879,6 +882,8 @@ static struct uci_package *uci_file_load(struct uci_context *ctx, const char *na
 	bool confdir;
 	FILE *file = NULL;
 
+	printf("%s: input name = %s\n", __func__, name);
+
 	switch (name[0]) {
 	case '.':
 		/* relative path outside of /etc/config */
@@ -900,6 +905,7 @@ static struct uci_package *uci_file_load(struct uci_context *ctx, const char *na
 
 	UCI_TRAP_SAVE(ctx, done);
 	file = uci_open_stream(ctx, filename, NULL, SEEK_SET, false, false);
+	printf("%s: open %s file = %d\n", __func__, filename, *(int*)file);
 	ctx->err = 0;
 	UCI_INTERNAL(uci_import, ctx, file, name, &package, true);
 	UCI_TRAP_RESTORE(ctx);

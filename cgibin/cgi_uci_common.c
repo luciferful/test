@@ -41,19 +41,23 @@ int config_get(char *filename, char *section, char *option, unsigned char *pdata
  
 	ctx = uci_alloc_context(); 	// 申请一个UCI上下文.
 	if (!ctx) {
+		printf("%s: uci_alloc_context = NULL!\n", __func__);
 		return UCI_ERR_MEM;
 	}
  
 	ret = uci_load(ctx, filename, &pkg);		// 加载并解析配置文件
 	if(ret != UCI_OK)
     {
+		printf("%s: uci_load = %d!\n", __func__, ret);
         uci_free_context(ctx);
         return ret;
     }
  
+	printf("%s: pkg->e.name = %s, section = %s\n", __func__, pkg->e.name, section);
 	s = uci_lookup_section(ctx, pkg, section);
 	if(s != NULL)
 	{
+		printf("%s: uci_lookup_section = %d!\n", __func__, ret);
 		if (NULL != (value = uci_lookup_option_string(ctx, s, option)))
 		{//			pdata = (unsigned char *)strdup(value);
 			strncpy(pdata, value, 100);
@@ -69,6 +73,7 @@ int config_get(char *filename, char *section, char *option, unsigned char *pdata
 	}
 	else
 	{
+		printf("%s: uci_lookup_section = NULL!\n", __func__);
 		uci_unload(ctx, pkg);
 		uci_free_context(ctx);
 		ctx = NULL;

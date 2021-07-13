@@ -210,6 +210,7 @@ int uci_commit(struct uci_context *ctx, struct uci_package **package, bool overw
 int uci_load(struct uci_context *ctx, const char *name, struct uci_package **package)
 {
 	struct uci_package *p;
+	printf("%s: name = %s\n", __func__, name);
 
 	UCI_HANDLE_ERR(ctx);
 	UCI_ASSERT(ctx, ctx->backend && ctx->backend->load);

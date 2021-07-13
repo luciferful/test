@@ -64,6 +64,8 @@ void networkdata(cJSON *node, int get)
 
 int main()
 {
+	int ret, len;
+	char buf[64];
 	cJSON * root =  cJSON_CreateObject();
 	cJSON * dev = cJSON_CreateObject();
 	char *printtext;
@@ -73,13 +75,16 @@ int main()
 
 	cJSON_AddItemToObject(root, "results", dev);
 	cJSON_AddStringToObject(root, "status", "success");
-	cJSON_AddNumberToObject(dev, "devtype", 1);
+	cJSON_AddNumberToObject(dev, "devtype", 4);
+	
+	//ret = uci_get_str("system.system.hostname", buf);
+	ret = config_get("/etc/config/system", "system", "hostname", buf, &len);
+	printf("%s, ret = %d\n", buf, ret);
 
-	networkdata(dev, 1);
+	//networkdata(dev, 1);
 	printf("%s\n\n", printtext = cJSON_Print(root));
 	    
 	free(printtext);
-	cJSON_Delete(dev);
     cJSON_Delete(root);
 
 	return 0;

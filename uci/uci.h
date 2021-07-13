@@ -18,7 +18,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+#ifndef UCI_DEBUG
+#define UCI_DEBUG
+#endif
 #include "uci_config.h"
 
 /*
