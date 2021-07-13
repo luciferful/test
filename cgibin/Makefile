@@ -4,14 +4,14 @@
 CC                    ?= gcc
 AR                    ?= ar
 DEFS =
-DEFAULT_INCLUDES = -I. -I$(top_builddir)/include
+DEFAULT_INCLUDES = -I. -I$(top_builddir)/include -I ../uci
 INCLUDES =
 AM_CPPFLAGS = -I$(top_srcdir)/include
 CFLAGS                = -fPIC -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security -Wl,-z,relro,-z,now -Wl,--as-needed -Wl,--no-copy-dt-needed-entries -w
 
 IFLAGS                = "-I$(BUILD)/inc"
 LDFLAGS               = '-rdynamic' '-Wl,--enable-new-dtags' '-Wl,-rpath,$$ORIGIN/'
-LIBPATHS              = -L$(BUILD)/bin
+LIBPATHS              = -L../uci/ -luci
 LIBS                  = -lrt -ldl -lpthread -lm
 
 CCLD = $(CC)
@@ -21,7 +21,7 @@ LINK = $(CCLD) $(CFLAGS) $(LDFLAGS) $(AM_LDFLAGS)
 WEB_PATH = ~/goahead-4.1.3/build/linux-x86-default/bin
 
 #define the TestEx of exectue
-COMM_OBJ = cJSON.o cJSON_utils.o cgi_common.o
+COMM_OBJ = cJSON.o cJSON_utils.o cgi_common.o cgi_uci_common.o
 
 #define the input file
 #cgibin_SOURCES = main.c 
@@ -29,7 +29,7 @@ SRCS := $(wildcard *.c)
 OBJS := $(SRCS:.c=.o)
 
 define module
-	$(LINK) $(1).o $(COMM_OBJ) $(LIBS) -o bin/$(1)
+	$(LINK) $(1).o $(COMM_OBJ) $(LIBPATHS) $(LIBS) -o bin/$(1)
 	install -m0777 bin/$(1) $(WEB_PATH)/cgi-bin/
 endef
 

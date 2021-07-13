@@ -18,6 +18,9 @@
 #include <fcntl.h>
 #include "cJSON.h"
 #include "cJSON_Utils.h"
+#include "cgi_common.h"
+#include "cgi_uci_common.h"
+
 
 enum emuJsonType
 {

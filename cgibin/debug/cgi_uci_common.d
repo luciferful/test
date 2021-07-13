@@ -1,4 +1,4 @@
-cgi_read_nodeinfo.o: cgi_read_nodeinfo.c /usr/include/stdc-predef.h \
+cgi_uci_common.o: cgi_uci_common.c /usr/include/stdc-predef.h \
  /usr/include/dirent.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
